@@ -1,6 +1,6 @@
 # Advanced Data Engineering
 
-## Key Terms
+## Key Terms (Part 1):
 
 - `Queue`: A place where items of work are stored and managed. Items of work represent units of tasks or actions that need to be processed.
 
@@ -36,3 +36,55 @@
 
 - `Units of work`: Represent individual tasks or actions that need to be processed. These could be data, sending emails, or any other type of action
 
+
+## Key Terms (Part 2):
+
+- `Celery`: An asynchronous task queue based on distributed message passing. Allows you to execute tasks asynchronously outside of the request-response cycle. Integrates well with Flask for building asynchronous web applications.
+
+- `RabbitMQ`: An open source message broker that implements the Advanced Message Queuing Protocol (AMQP). Used by Celery to pass messages between clients and workers for processing tasks asynchronously.
+
+- `Task`: A unit of work in Celery that gets executed asynchronously. Typically invoked on a route or endpoint and then handed off to a worker process to execute.
+
+- `Worker`: A process that Celery starts to execute tasks that are sent through the message queue. Pulls tasks from the queue and executes them. Can run asynchronously in the background.
+
+- `Queue`: A queue that Celery uses to pass messages between clients and workers. Celery uses RabbitMQ and AMQP to implement the queue. Messages represent tasks to be executed.
+
+- `Flask`: A popular Python web framework. Used to build the web application and endpoints. Integrates with Celery to offload tasks to worker processes.
+
+- `Shared task`: A convenience Celery decorator to create tasks. Automatically connects to a broker and backend based on configuration. Good for simple use cases.
+
+- `Delay`: A Celery method to introduce artificial delays when executing tasks. Used to demonstrate asynchronous behavior since tasks return immediately.
+
+## Key Terms (Part 3):
+
+`Export`: Save MySQL data externally. Useful for external processing or backup.
+```bash
+# Export table data to a file 
+cursor.execute("SELECT * FROM table INTO OUTFILE 'data.csv'")
+```
+
+`Import`: Load external data into MySQL like a file or dump. Quick way to ingest data.
+```bash
+# Import data from a CSV file
+cursor.execute("LOAD DATA LOCAL INFILE 'data.csv' INTO TABLE mytable")
+```
+
+`Piping`: Redirect the output of one command to another command. Integrates MySQL and bash.
+```bash
+# MySQL query output to grep  
+mysql -e "SELECT * FROM users WHERE name LIKE '%John%'" | grep "@gmail"
+```
+
+
+`Batch Processing`: Chain together commands for sequential data processing without code
+```bash
+# Query, extract names, count records
+Parallel Pipelines: Split data across commands simultaneously to improve performance.
+
+```
+
+`Parallel Pipelines`: Split data across commands simultaneously to improve performance.
+```bash
+# Search 2 columns in parallel 
+mysql -e "SELECT name FROM users" | cut -d, -f1 | wc -l
+```
